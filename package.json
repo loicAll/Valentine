@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh": "ng build --configuration production --base-href /Valentine/",
+    "deploy": "npm run build:gh && npx angular-cli-ghpages --dir=dist/valentine-frontend",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -36,6 +38,7 @@
     "@angular/build": "^21.1.2",
     "@angular/cli": "^21.1.2",
     "@angular/compiler-cli": "^21.1.0",
+    "angular-cli-ghpages": "^0.6.2",
     "typescript": "~5.9.2"
   }
 }

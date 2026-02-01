@@ -1,0 +1,480 @@
+// Variables
+$primary-pink: #ff6b9d;
+$secondary-pink: #ff8fab;
+$light-pink: #ffc2d1;
+$dark-pink: #e91e63;
+$heart-red: #ff1744;
+$background-gradient: linear-gradient(135deg, #ffeef3 0%, #fff0f5 50%, #ffe4ec 100%);
+
+// Animations
+@keyframes float {
+  0%, 100% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes fireworkExplode {
+  0% {
+    transform: rotate(var(--angle)) translateX(0) scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) translateX(var(--distance)) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes bigHeartBeat {
+  0%, 100% {
+    transform: scale(1) rotate(-5deg);
+  }
+  25% {
+    transform: scale(1.3) rotate(5deg);
+  }
+  50% {
+    transform: scale(1) rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.4) rotate(5deg);
+  }
+}
+
+// Main styles
+.valentine-container {
+  min-height: 100vh;
+  background: $background-gradient;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Comic Sans MS', cursive, sans-serif;
+
+  &.fireworks-active {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  }
+}
+
+// Floating hearts
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-heart {
+  position: absolute;
+  animation: float 8s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(255, 107, 157, 0.5));
+}
+
+// Content
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 20px;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.title {
+  font-size: 3rem;
+  color: $dark-pink;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  animation: pulse 2s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+// Question card
+.question-card {
+  background: white;
+  border-radius: 30px;
+  padding: 50px 60px;
+  box-shadow: 
+    0 20px 60px rgba(255, 107, 157, 0.3),
+    0 0 0 5px rgba(255, 107, 157, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 30px 20px;
+    margin: 0 15px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, $primary-pink, $heart-red, $primary-pink);
+    border-radius: 32px;
+    z-index: -1;
+  }
+}
+
+.question {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+}
+
+// Message bubble
+.message-bubble {
+  background: linear-gradient(135deg, $light-pink, $secondary-pink);
+  border-radius: 20px;
+  padding: 15px 25px;
+  margin-bottom: 25px;
+  animation: fadeInUp 0.5s ease-out, shake 0.5s ease-in-out;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid $secondary-pink;
+  }
+
+  p {
+    margin: 0;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+}
+
+// Buttons
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  min-height: 80px;
+  align-items: center;
+}
+
+.btn {
+  padding: 18px 45px;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+  @media (max-width: 768px) {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+  }
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, $heart-red, $dark-pink);
+  color: white;
+  animation: pulse 1.5s ease-in-out infinite;
+
+  &:hover {
+    transform: scale(1.15);
+    box-shadow: 0 12px 35px rgba(233, 30, 99, 0.4);
+  }
+}
+
+.btn-no {
+  background: linear-gradient(135deg, #9e9e9e, #757575);
+  color: white;
+  position: relative;
+
+  &:hover {
+    background: linear-gradient(135deg, #757575, #616161);
+  }
+}
+
+// Success container
+.success-container {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  animation: fadeInUp 1s ease-out;
+}
+
+.success-title {
+  font-size: 4rem;
+  color: white;
+  text-shadow: 
+    0 0 20px rgba(255, 107, 157, 0.8),
+    0 0 40px rgba(255, 107, 157, 0.6),
+    0 0 60px rgba(255, 107, 157, 0.4);
+  margin-bottom: 20px;
+  animation: heartbeat 1s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+}
+
+.success-subtitle {
+  font-size: 1.8rem;
+  color: $light-pink;
+  margin-bottom: 40px;
+  animation: bounce 2s ease-in-out infinite;
+
+  &.evil-text {
+    color: #ff5722;
+    text-shadow: 0 0 20px rgba(255, 87, 34, 0.8);
+    animation: shake 0.5s ease-in-out infinite;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+}
+
+.big-heart {
+  font-size: 8rem;
+  animation: bigHeartBeat 1s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.8));
+
+  @media (max-width: 768px) {
+    font-size: 5rem;
+  }
+}
+
+// Fireworks
+.fireworks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.heart-firework {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.firework-heart {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: fireworkExplode 1.5s ease-out forwards;
+  filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.8));
+}
+
+// Countdown styles
+.countdown-container {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border-radius: 20px;
+  border: 3px solid #ff9800;
+  animation: pulse 0.5s ease-in-out infinite;
+}
+
+.countdown-text {
+  font-size: 1.1rem;
+  color: #e65100;
+  margin: 5px 0;
+  font-weight: 600;
+}
+
+.countdown-number {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #ff5722;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+
+  &.countdown-urgent {
+    color: #d32f2f;
+    animation: shake 0.3s ease-in-out infinite;
+    font-size: 5rem;
+  }
+}
+
+// Button when No disappears
+.btn-yes-big {
+  padding: 25px 70px !important;
+  font-size: 1.8rem !important;
+  animation: pulse 0.8s ease-in-out infinite, bounce 1s ease-in-out infinite !important;
+}
+
+// Drama mode styles
+.drama-mode {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d132c 50%, #1a1a2e 100%) !important;
+}
+
+.drama-card {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border-color: #ff1744 !important;
+
+  &::before {
+    background: linear-gradient(45deg, #ff1744, #880e4f, #ff1744) !important;
+  }
+}
+
+.drama-bubble {
+  background: linear-gradient(135deg, #ff1744, #d50000) !important;
+  
+  p {
+    color: white !important;
+    font-size: 1.4rem !important;
+  }
+
+  &::after {
+    border-top-color: #d50000 !important;
+  }
+}
+
+.drama-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.drama-content {
+  text-align: center;
+  padding: 40px;
+}
+
+.broken-heart {
+  font-size: 10rem;
+  animation: shake 0.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(255, 23, 68, 0.8));
+}
+
+.drama-text {
+  font-size: 2.5rem;
+  color: #ff1744;
+  margin: 20px 0;
+  text-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
+}
+
+.drama-subtext {
+  font-size: 1.5rem;
+  color: #ffcdd2;
+  margin-bottom: 30px;
+}
+
+.btn-yes-drama {
+  padding: 20px 50px !important;
+  font-size: 1.5rem !important;
+  animation: pulse 0.5s ease-in-out infinite !important;
+}
+
+// Fake cursor
+.fake-cursor {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transition: left 1.5s ease-in-out, top 1.5s ease-in-out;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+  
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+}
